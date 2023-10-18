@@ -15,7 +15,7 @@ write_to = "brainles_hd_bet/_version.py"
 name = "BrainLes_HD-BET"
 requires-python = ">=3.5"
 # dynamic = ["version"]
-version = "0.0.4"
+version = "0.0.5"
 authors = [
   { name = "Florian Kofler", email = "florian.kofler@tum.de" },
   { name = "Isra Mekki", email = "isra.mekki@helmholtz-muenchen.de" },
@@ -35,10 +35,10 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 dependencies = [
-  'numpy==1.24.0',
+  'numpy>=1.24.0',
   'torch>=0.4.1',
-  'scikit-image==0.21.0',
-  'SimpleITK==2.2.1',
+  'scikit-image>=0.21.0',
+  'SimpleITK>=2.2.1',
 ]
 
 [project.scripts]

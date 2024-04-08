@@ -31,8 +31,8 @@ class BaseConfig(object):
     def __repr__(self):
         res = ""
         for v in vars(self):
-            if not v.startswith("__") and not v.startswith("_") and v is not 'dataset':
-                res += (v + ": " + str(self.__getattribute__(v)) + "\n")
+            if not v.startswith("__") and not v.startswith("_") and v != "dataset":
+                res += v + ": " + str(self.__getattribute__(v)) + "\n"
         return res
 
 
@@ -40,7 +40,7 @@ class HD_BET_Config(BaseConfig):
     def __init__(self):
         super(HD_BET_Config, self).__init__()
 
-        self.EXPERIMENT_NAME = self.__class__.__name__ # just a generic experiment name
+        self.EXPERIMENT_NAME = self.__class__.__name__  # just a generic experiment name
 
         # network parameters
         self.net_base_num_layers = 21
@@ -62,13 +62,15 @@ class HD_BET_Config(BaseConfig):
 
         # validation
         self.val_use_DO = False
-        self.val_use_train_mode = False # for dropout sampling
-        self.val_num_repeats = 1 # only useful if dropout sampling
-        self.val_batch_size = 1 # only useful if dropout sampling
+        self.val_use_train_mode = False  # for dropout sampling
+        self.val_num_repeats = 1  # only useful if dropout sampling
+        self.val_batch_size = 1  # only useful if dropout sampling
         self.val_save_npz = True
-        self.val_do_mirroring = True # test time data augmentation via mirroring
+        self.val_do_mirroring = True  # test time data augmentation via mirroring
         self.val_write_images = True
-        self.net_input_must_be_divisible_by = 16  # we could make a network class that has this as a property
+        self.net_input_must_be_divisible_by = (
+            16  # we could make a network class that has this as a property
+        )
         self.val_min_size = self.INPUT_PATCH_SIZE
         self.val_fn = None
 
@@ -78,13 +80,25 @@ class HD_BET_Config(BaseConfig):
         self.val_use_moving_averages = False
 
     def get_network(self, train=True, pretrained_weights=None):
-        net = Network(self.num_classes, len(self.selected_data_channels), self.net_base_num_layers,
-                               self.net_dropout_p, softmax_helper, self.net_leaky_relu_slope, self.net_conv_use_bias,
-                               self.net_norm_use_affine, True, self.net_do_DS)
+        net = Network(
+            self.num_classes,
+            len(self.selected_data_channels),
+            self.net_base_num_layers,
+            self.net_dropout_p,
+            softmax_helper,
+            self.net_leaky_relu_slope,
+            self.net_conv_use_bias,
+            self.net_norm_use_affine,
+            True,
+            self.net_do_DS,
+        )
 
         if pretrained_weights is not None:
             net.load_state_dict(
-                torch.load(pretrained_weights, map_location=lambda storage, loc: storage))
+                torch.load(
+                    pretrained_weights, map_location=lambda storage, loc: storage
+                )
+            )
 
         if train:
             net.train(True)

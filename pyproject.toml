@@ -1,53 +1,58 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
 
-[tool.setuptools]
-packages = ["brainles_hd_bet"]
+[tool.poetry-dynamic-versioning]
+enable = true
 
-[tool.setuptools.dynamic]
-#version = {attr = "my_package.VERSION"}
-readme = { file = "README.md" }
-
-[tool.setuptools_scm]
-write_to = "brainles_hd_bet/_version.py"
-
-[project]
-name = "BrainLes_HD-BET"
-requires-python = ">=3.5"
-# dynamic = ["version"]
-version = "0.0.5"
-authors = [
-  { name = "Florian Kofler", email = "florian.kofler@tum.de" },
-  { name = "Isra Mekki", email = "isra.mekki@helmholtz-muenchen.de" },
-]
-maintainers = [
-  { name = "Florian Kofler", email = "florian.kofler@tum.de" },
-  { name = "Isra Mekki", email = "isra.mekki@helmholtz-muenchen.de" },
-]
+[tool.poetry]
+name = "brainles_hd_bet"
+version = "0.0.0" # will be overwritten by poetry-dynamic-versioning but needs to be set
 description = "TODO."
+license = "AGPL-3.0"
+repository = "https://github.com/BrainLesion/HD-BET"
+authors = [
+  "Florian Kofler <florian.kofler@tum.de>",
+  "Isra Mekki <isra.mekki@helmholtz-muenchen.de>",
+  "Marcel Rosier <marcel.rosier@tum.de>",
+]
+
+maintainers = [
+  "Florian Kofler <florian.kofler@tum.de>",
+  "Isra Mekki <isra.mekki@helmholtz-muenchen.de>",
+  "Marcel Rosier <marcel.rosier@tum.de>",
+]
+
 keywords = ["Brain extraction, skull stripping"]
 readme = "README.md"
-# requires-python = "==3.10"
+
 classifiers = [
   "Programming Language :: Python :: 3",
   # TODO check license issues
   "License :: OSI Approved :: GNU Affero General Public License v3",
   "Operating System :: OS Independent",
 ]
-dependencies = [
-  'numpy>=1.24.0',
-  'torch>=0.4.1',
-  'scikit-image>=0.21.0',
-  'SimpleITK>=2.2.1',
-]
 
-[project.scripts]
+[tool.poetry.dependencies]
+
+python = ">=3.5"
+numpy = ">=1.24.0"
+torch = ">=0.4.1"
+scikit-image = ">=0.21.0"
+SimpleITK = ">=2.2.1"
+
+
+[tool.poetry.scripts]
 hd-bet = "brainles_hd_bet:hd_bet.main"
 
-[project.optional-dependencies]
-dev = ["pytest"]
+[tool.poetry.dev-dependencies]
+pytest = "^6.2"
 
+[tool.poetry.group.docs]
+optional = true
 
-[project.urls]
-# documentation = "TODO"
-repository = "https://github.com/BrainLesion/HD-BET"
+[tool.poetry.group.docs.dependencies]
+Sphinx = ">=7.0.0"
+sphinx-copybutton = ">=0.5.2"
+sphinx-rtd-theme = ">=1.3.0"
+myst-parser = ">=2.0.0"

@@ -11,7 +11,7 @@ folder_with_parameter_files = Path(os.path.join(file_abspath, "model_weights"))
 
 
 def get_params_fname(fold):
-    return folder_with_parameter_files / f"{fold}d.model"
+    return folder_with_parameter_files / f"{fold}.model"
 
 
 def maybe_download_parameters(fold=0, force_overwrite=False):

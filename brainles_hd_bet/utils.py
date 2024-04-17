@@ -4,13 +4,10 @@ from torch import nn
 import numpy as np
 from skimage.morphology import label
 import os
+from pathlib import Path
 
 file_abspath = os.path.dirname(os.path.abspath(__file__))
-folder_with_parameter_files = os.path.join(file_abspath, "model_weights")
-
-
-def get_params_fname(fold):
-    return os.path.join(folder_with_parameter_files, "%d.model" % fold)
+folder_with_parameter_files = Path(os.path.join(file_abspath, "model_weights"))
 
 
 def maybe_download_parameters(fold=0, force_overwrite=False):
@@ -23,10 +20,10 @@ def maybe_download_parameters(fold=0, force_overwrite=False):
 
     assert 0 <= fold <= 4, "fold must be between 0 and 4"
 
-    if not os.path.isdir(folder_with_parameter_files):
-        maybe_mkdir_p(folder_with_parameter_files)
+    if not folder_with_parameter_files.exists():
+        folder_with_parameter_files.mkdir(parents=True, exist_ok=True)
 
-    out_filename = get_params_fname(fold)
+    out_filename = folder_with_parameter_files / f"{fold}d.model"
 
     if force_overwrite and os.path.isfile(out_filename):
         os.remove(out_filename)
@@ -123,10 +120,3 @@ def subfiles(folder, join=True, prefix=None, suffix=None, sort=True):
 
 
 subfolders = subdirs  # I am tired of confusing those
-
-
-def maybe_mkdir_p(directory):
-    splits = directory.split("/")[1:]
-    for i in range(0, len(splits)):
-        if not os.path.isdir(os.path.join("/", *splits[: i + 1])):
-            os.mkdir(os.path.join("/", *splits[: i + 1]))

@@ -10,6 +10,10 @@ file_abspath = os.path.dirname(os.path.abspath(__file__))
 folder_with_parameter_files = Path(os.path.join(file_abspath, "model_weights"))
 
 
+def get_params_fname(fold):
+    return folder_with_parameter_files / f"{fold}d.model"
+
+
 def maybe_download_parameters(fold=0, force_overwrite=False):
     """
     Downloads the parameters for some fold if it is not present yet.
@@ -23,7 +27,7 @@ def maybe_download_parameters(fold=0, force_overwrite=False):
     if not folder_with_parameter_files.exists():
         folder_with_parameter_files.mkdir(parents=True, exist_ok=True)
 
-    out_filename = folder_with_parameter_files / f"{fold}d.model"
+    out_filename = get_params_fname(fold)
 
     if force_overwrite and os.path.isfile(out_filename):
         os.remove(out_filename)

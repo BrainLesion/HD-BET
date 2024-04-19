@@ -82,7 +82,6 @@ def run_hd_bet(
     if device == "cpu":
         net = net.cpu()
     else:
-
         net.cuda(device)
 
     if not isinstance(mri_fnames, (list, tuple)):

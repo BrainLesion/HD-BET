@@ -49,6 +49,9 @@ def run_hd_bet(
     CPU you may want to turn that off to speed things up
     :return:
     """
+    # fallback to CPU if CUDA is not available
+    if not torch.cuda.is_available() and device != "cpu":
+        device = "cpu"
 
     list_of_param_files = []
 

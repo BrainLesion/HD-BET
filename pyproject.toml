@@ -32,6 +32,7 @@ classifiers = [
   "License :: OSI Approved :: GNU Affero General Public License v3",
   "Operating System :: OS Independent",
 ]
+exclude = ["brainles_hd_bet/model_weights"] # Exclude the model_weights folder
 
 [tool.poetry.dependencies]
 

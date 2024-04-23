@@ -36,7 +36,7 @@ exclude = ["brainles_hd_bet/model_weights"] # Exclude the model_weights folder
 
 [tool.poetry.dependencies]
 
-python = ">=3.5"
+python = ">=3.8"
 numpy = ">=1.24.0"
 torch = ">=0.4.1"
 scikit-image = ">=0.21.0"
@@ -47,7 +47,7 @@ SimpleITK = ">=2.2.1"
 hd-bet = "brainles_hd_bet:hd_bet.main"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2"
+pytest = ">=6.2"
 
 [tool.poetry.group.docs]
 optional = true

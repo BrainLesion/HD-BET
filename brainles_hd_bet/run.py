@@ -1,16 +1,18 @@
-import torch
+import importlib.util
+import os
+
 import numpy as np
 import SimpleITK as sitk
+import torch
+
 from brainles_hd_bet.data_loading import load_and_preprocess, save_segmentation_nifti
 from brainles_hd_bet.predict_case import predict_case_3D_net
-import imp
 from brainles_hd_bet.utils import (
-    postprocess_prediction,
     SetNetworkToVal,
     get_params_fname,
     maybe_download_parameters,
+    postprocess_prediction,
 )
-import os
 
 file_abspath = os.path.dirname(os.path.abspath(__file__))
 
@@ -75,7 +77,9 @@ def run_hd_bet(
         [os.path.isfile(i) for i in list_of_param_files]
     ), "Could not find parameter files"
 
-    cf = imp.load_source("cf", config_file)
+    spec = importlib.util.spec_from_file_location("cf", config_file)
+    cf = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cf)
     cf = cf.config()
 
     net, _ = cf.get_network(cf.val_use_train_mode, None)
